@@ -19,7 +19,6 @@ export const useAsyncValue = <TPromisedValue>(promisedValue: Promise<TPromisedVa
             try {
                 setIsLoading(true)
                 const response = await promisedValue;
-                await delay(2000, {})
                 setAsyncValue(response);
             } catch (error) {
                 setError(error);
