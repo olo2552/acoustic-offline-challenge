@@ -1,0 +1,10 @@
+{
+  "name": "acoustic-offline-challenge",
+  "version": "0.0.1",
+  "description": "Recruitment task for acoustic company",
+  "main": "index.js",
+  "repository": "https://github.com/olo2552/acoustic-offline-challenge.git",
+  "author": "Aleksander Wielgorski <a.wielgorski@protonmail.com>",
+  "license": "MIT",
+  "private": false
+}
