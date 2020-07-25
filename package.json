@@ -6,5 +6,8 @@
   "repository": "https://github.com/olo2552/acoustic-offline-challenge.git",
   "author": "Aleksander Wielgorski <a.wielgorski@protonmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "create-react-app": "3.4.1"
+  }
 }
