@@ -15,13 +15,15 @@ interface IAcousticContentArticleLayout {
     };
 }
 
-type IAcousticContentArticleElement = {
+interface IAcousticContentArticleSingleValueElement {
     elementType: string; // TODO: should be enum probably, but I don't yet know the type
     value: string;
     typeRef?: {
         id: string;
     }
-} | {
+}
+
+interface IAcousticContentArticleMultiValueElement {
     elementType: string; // TODO: should be enum probably, but I don't yet know the type
     values: string[];
     typeRef?: {
@@ -29,13 +31,43 @@ type IAcousticContentArticleElement = {
     }
 }
 
-interface IAcousticContentArticleElements {
-    elements: {
-        heading: IAcousticContentArticleElement;
-        author: IAcousticContentArticleElement;
-        body: IAcousticContentArticleElement;
-        date: IAcousticContentArticleElement;
+interface IAcousticContentArticleMainImage {
+    elementType: string; // TODO: should be enum probably, but I don't yet know the type
+    value: {
+        leadImage: {
+            mode: string // TODO: should be enum probably, but I don't yet know the type
+            profiles: string[];
+            renditions: {
+                lead: {
+                    source: string;
+                    width: number;
+                    height: number;
+                    url: string;
+                };
+            };
+            asset: {
+                fileName: string;
+                altText: string;
+                fileSize: number;
+                width: number;
+                mediaType: string;
+                id: string;
+                resourceUri: string;
+                height: number;
+            };
+            url: string;
+        },
+        leadImageCaption: IAcousticContentArticleSingleValueElement,
+        leadImageCredit: IAcousticContentArticleSingleValueElement,
     }
+}
+
+interface IAcousticContentArticleElements {
+    heading: IAcousticContentArticleSingleValueElement;
+    author: IAcousticContentArticleSingleValueElement;
+    body: IAcousticContentArticleMultiValueElement;
+    date: IAcousticContentArticleSingleValueElement;
+    mainImage: IAcousticContentArticleMainImage;
 }
 
 interface IAcousticContentArticleLink {
@@ -43,13 +75,11 @@ interface IAcousticContentArticleLink {
 }
 
 interface IAcousticContentArticleLinks {
-    links: {
-        thumbnail: IAcousticContentArticleLink;
-        "retire": IAcousticContentArticleLink;
-        "draft": IAcousticContentArticleLink;
-        "self": IAcousticContentArticleLink;
-        "type": IAcousticContentArticleLink;
-    };
+    thumbnail: IAcousticContentArticleLink;
+    "retire": IAcousticContentArticleLink;
+    "draft": IAcousticContentArticleLink;
+    "self": IAcousticContentArticleLink;
+    "type": IAcousticContentArticleLink;
 }
 
 export interface IAcousticContentArticle {
