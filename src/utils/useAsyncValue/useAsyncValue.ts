@@ -1,14 +1,28 @@
 import {useEffect, useState} from "react";
 
-function delay(t: any, v: any) {
-    return new Promise(function(resolve) {
-        setTimeout(resolve.bind(null, v), t)
-    });
+type AsyncValueLoaded<T> = {
+    isLoading: false;
+    error: null;
+    asyncValue: T;
 }
+
+type AsyncValueLoading<T> = {
+    isLoading: true;
+    error: null;
+    asyncValue: null;
+}
+
+type AsyncValueErrored<T> = {
+    isLoading: true;
+    error: any;
+    asyncValue: null;
+}
+
+type AsyncValueSet<T> = AsyncValueLoaded<T> | AsyncValueLoading<T> | AsyncValueErrored<T>;
 
 // the generic parameter could be omitted, if I used infer TS keyword, with strict type safety
 // but from the experience it can be problematic and can take some time to do it right, so I leave it as is for now
-export const useAsyncValue = <TPromisedValue>(promisedValue: Promise<TPromisedValue>) => {
+export const useAsyncValue = <TPromisedValue>(promisedValue: Promise<TPromisedValue>): AsyncValueSet<TPromisedValue> => {
     const [asyncValue, setAsyncValue] = useState<TPromisedValue | null>(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -27,5 +41,5 @@ export const useAsyncValue = <TPromisedValue>(promisedValue: Promise<TPromisedVa
             }
         })();
     }, []);
-    return { asyncValue, error, isLoading };
+    return { asyncValue, error, isLoading } as AsyncValueSet<TPromisedValue>;
 };
