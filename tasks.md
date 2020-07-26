@@ -6,7 +6,7 @@ Metawork:
 Tests:
     - [ ] Set up StoryBook
     - [x] Set up ReactTestingLibrary
-        Already used by CRA, nice :)
+        Already used by CRA
     - [ ] Set up ReactHooksTestingLibrary
     - [ ] Set up MockServiceWorker
 
@@ -18,32 +18,32 @@ Dependencies:
         I'm using axios, because it's more flexible than fetchAPI (for instance axios' interceptors), and it rejects promise on 404
 
 Accessibility:
-    - [ ] normalize styles across browsers
+    - [x] normalize styles across browsers
     - [ ] Ensure semantic HTML
     - [ ] Ensure no-redundant divs are in the tree
     - [ ] `aria` tags
     - [ ] Responsive Web Design
-    - [ ] Internationalization
+    - [x] Internationalization
 
 DEV:
     - [x] Set up CreateReactApp
-    - [ ] Link Bulma as styling library
-    - [ ] i18n
-    Asynchronicity:
+    - [x] Link Bulma as styling library
+    Asynchronicity
         - [x] Prepare Types based on email information
         - [x] Prepare useAsyncLoading hook
         - [x] Prepare SpinnerComponent
             No need to reinvent the wheel, found some nice `react-loader-spinner`
     - [ ] Prepare ArticleComponent
-        - [ ] Author section
-        - [ ] Date (use date-fns)
-        - [ ] Topic Title
+        - [x] Author section
+        - [x] Date (use date-fns)
+        - [x] Topic Title
         - [ ] Lead Image
+            - use fallback in when not overriding is present
+        - [ ] Tags Section
     - [x] Prepare API facade
-
-    ErrorHandling:
-        - [ ] Abstract 5XX errors
-        -
+    ErrorHandling
+        - [x] Abstract 5XX errors
+        
 Intentionally Omitted:
     - Routing / Making it an app
         Things can grow really fast really quickly...
@@ -61,10 +61,6 @@ Intentionally Omitted:
         It doesn't really proves much for my job, and I don't have designs to follow, so it would end up much more ugly than ready-to-use modules
     - Authorization / Authentication:
         The content wasn't have any permission/tenant restrictions, thus I didn't reinvent these wheels once again
-    - Security:
-        Normally, when I am provided HTML from backend and should render it on frontend, I have a red light screaming in my head
-        Ideally, I would ensure it's safe with backend developers (ideally more than one), and for 100% sureness I would sanitize that HTML anyway, but it's nontrivial stuff, and I didn't want to end up spiking and reading millions of parsers from npm
-        And let's be honest, it's only recruitment task, and I wouldn't want to be bothered by interviewees emails so much as a reviewer
     - Naming conventions:
         In the production app I would get more context info for that article, and named the components in some other way.
         But it's only a POC, so it's good enough for me to name components as an `Article`, `UserHeader` etc
