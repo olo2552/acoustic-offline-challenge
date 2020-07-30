@@ -13,8 +13,10 @@ export const ArticleSection: FC<IArticleSectionProps> = (props) => {
             dangerouslySetInnerHTML={{__html: sanitize(props.content)}}
             css={css`
                 text-align: justify;
+                font-size: 1.2rem;
             `}
             className={"column"}
+            data-testid={"article__content-section"}
         />
     );
 }
