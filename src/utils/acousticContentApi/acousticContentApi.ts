@@ -8,9 +8,9 @@ const getArticle = (articleId: string): Promise<IAcousticContentArticle> => {
         });
 };
 
-const getImageLink = (imageSlug?: string): string | undefined => {
+const getImageLink = (imageSlug?: string): string => {
     if (!imageSlug) {
-        return;
+        return '';
     }
     return `https://content-eu-4.content-cms.com${imageSlug}`
 }
