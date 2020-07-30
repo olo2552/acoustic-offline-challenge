@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React from "react";
 import {AcousticContentApi} from "../utils/acousticContentApi/acousticContentApi";
-import {ArticleSection} from "./ArticleSection";
+import {ArticleContent} from "./ArticleContent";
 import {css, jsx} from "@emotion/core";
 import {LabelWithIcon} from "./LabelWithIcon";
 import {formatDistanceToNow} from "date-fns";
@@ -75,15 +75,9 @@ export const Article: React.FC<IArticleProps> = (props) => {
                     altText={props.mainImage.altText}
                 />
             )}
-
-            {props.content.map((articleSectionContent, sectionIndex) => {
-                return (
-                    <ArticleSection
-                        key={sectionIndex}
-                        content={articleSectionContent}
-                    />
-                );
-            })}
+            {!!props.content.length && (
+                <ArticleContent content={props.content.join('')} />
+            )}
         </article>
     );
 }

@@ -3,11 +3,11 @@ import React, {FC} from "react";
 import sanitize from "sanitize-html";
 import {css, jsx} from "@emotion/core";
 
-interface IArticleSectionProps {
+interface IArticleContentProps {
     content: string
 }
 
-export const ArticleSection: FC<IArticleSectionProps> = (props) => {
+export const ArticleContent: FC<IArticleContentProps> = (props) => {
     return (
         <section
             dangerouslySetInnerHTML={{__html: sanitize(props.content)}}
