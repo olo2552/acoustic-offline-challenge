@@ -77,3 +77,5 @@ Intentionally Omitted:
     - Color constants
     - Styled components
     - State management
+    - Checking he type corner-cases in unit tests
+        That's why you have typescript- if you use it well, and you trust your type-checking, you gain it for 'free'
