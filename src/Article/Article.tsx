@@ -1,16 +1,11 @@
 /** @jsx jsx */
-import React, {useMemo} from "react";
-import {useAsyncValue} from "../utils/useAsyncValue/useAsyncValue";
+import React from "react";
 import {AcousticContentApi} from "../utils/acousticContentApi/acousticContentApi";
-import {Spinner} from "../Spinner/Spinner";
 import {ArticleSection} from "./ArticleSection";
 import {css, jsx} from "@emotion/core";
 import {LabelWithIcon} from "./LabelWithIcon";
 import {formatDistanceToNow} from "date-fns";
-
-interface IArticleProps {
-    articleId: string;
-}
+import {ArticleMainImage} from "./ArticleMainImage";
 
 const getArticleCreationDate = (isoDate: string): string => {
     return formatDistanceToNow(new Date(isoDate), {
@@ -18,72 +13,77 @@ const getArticleCreationDate = (isoDate: string): string => {
     });
 }
 
+interface IArticleProps {
+    mainImage?: {
+        url: string;
+        altText?: string;
+        caption?: string;
+    };
+    title: string;
+    authorName?: string;
+    createdAt?: string;
+    content: string[];
+    tags?: string[];
+}
+
 export const Article: React.FC<IArticleProps> = (props) => {
-    const articlePromise = useMemo(() => AcousticContentApi.getArticle(props.articleId), [props.articleId]);
-    const {
-        asyncValue: asyncArticle,
-        error: articleError,
-        isLoading: isArticleLoading,
-    } = useAsyncValue(articlePromise);
+    return (
+        <article
+            css={css`
+                max-width: 760px;
+                margin: 0 auto;
+                padding: 4rem 2rem;
+            `}
+            className={"content columns is-vcentered"}
+        >
+            {!!props.content.length && (
+                <section
+                    css={css`
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                    `}
+                >
+                    {!!props.authorName && (
+                        <LabelWithIcon
+                            label={props.authorName}
+                            icon={"user"}
+                        />
+                    )}
+                    {!!props.createdAt && (
+                        <LabelWithIcon
+                            label={getArticleCreationDate(props.createdAt)}
+                            icon={"calendar"}
+                        />
+                    )}
+                </section>
+            )}
 
-    if (true) {
-        return (
-            <Spinner/>
-        );
-    }
+            <h1 className={"title is-1"}
+                css={css`
+                    font-size: 4rem;
+                    text-align: center;
+                `}
+            >
+                {props.title}
+            </h1>
 
-    // if (articleError) {
-    //     return (
-    //       <p>{"something went wrong"}</p>
-    //     );
-    // }
-    //
-    // return (
-    //     <article
-    //         css={css`
-    //             max-width: 760px;
-    //             margin: 0 auto;
-    //         `}
-    //         className={"content columns is-vcentered"}
-    //     >
-    //         <img
-    //             style={{
-    //                 width: "100%"
-    //             }}
-    //             src={AcousticContentApi.getImageLink(asyncArticle?.elements.mainImage.value.leadImage.renditions.lead.url)}
-    //             alt={asyncArticle?.elements.mainImage.value.leadImageCaption.value}
-    //         />
-    //         <h1
-    //             className={"title is-1"}
-    //             css={css`
-    //                 font-size: 4rem
-    //             `}>
-    //             {asyncArticle?.elements.heading.value}
-    //         </h1>
-    //         <section css={css`
-    //             width: 100%;
-    //             display: flex;
-    //             justify-content: space-between;
-    //         `}>
-    //             <LabelWithIcon
-    //                 label={asyncArticle?.elements.author.value || 'Author'}
-    //                 icon={"user"}
-    //             />
-    //             {asyncArticle?.elements.date.value && (
-    //                 <LabelWithIcon
-    //                     label={getArticleCreationDate(asyncArticle?.elements.date.value)}
-    //                     icon={"calendar"}
-    //                 />
-    //             )}
-    //         </section>
-    //         {asyncArticle?.elements.body.values.map((articleSectionContent, sectionIndex) => {
-    //             return (
-    //                 <ArticleSection
-    //                     key={sectionIndex}
-    //                     content={articleSectionContent}
-    //                 />
-    //             );
-    //         })}
-    //     </article>
-    // );
+            {!!props.mainImage && (
+                <ArticleMainImage
+                    url={AcousticContentApi.getImageLink(props.mainImage.url)}
+                    caption={props.mainImage.caption}
+                    altText={props.mainImage.altText}
+                />
+            )}
+
+            {props.content.map((articleSectionContent, sectionIndex) => {
+                return (
+                    <ArticleSection
+                        key={sectionIndex}
+                        content={articleSectionContent}
+                    />
+                );
+            })}
+        </article>
+    );
 }
