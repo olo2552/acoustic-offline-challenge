@@ -16,7 +16,6 @@ export const ArticleMainImage: FC<IArticleMainImageProps> = (props) => {
                 color: #999;
             `}
             className={"column"}
-            data-testid={"article__main-image"}
         >
             <img src={props.url}
                 alt={props.altText}

@@ -36,6 +36,7 @@ export const Article: React.FC<IArticleProps> = (props) => {
                 padding: 4rem 2rem;
             `}
             className={"content columns is-vcentered"}
+            data-testid={"article"}
         >
             {!!props.content.length && (
                 <section
@@ -65,6 +66,7 @@ export const Article: React.FC<IArticleProps> = (props) => {
                     font-size: 4rem;
                     text-align: center;
                 `}
+                data-testid={'article__header'}
             >
                 {props.title}
             </h1>

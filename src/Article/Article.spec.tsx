@@ -10,7 +10,7 @@ const MOCK_ARTICLE_TAGS = [
     'YOLO',
 ];
 const MOCK_ARTICLE_CONTENT = [
-    '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\n',
+    '<script></script><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\n',
     '<p> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\n',
     '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\n',
     '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\n',
@@ -20,7 +20,10 @@ const MOCK_MAIN_IMAGE = {
     url: "/859f2008-a40a-4b92-afd0-24bb44d10124/dxresources/9349/93493572-ea5b-4c27-89cf-8a5c3ee617ad.jpg?resize=1200px%3A846px&crop=1200%3A624%3B0%2C111",
     altText: 'some default alternate text for mainImage',
 };
+const MOCK_ARTICLE_ID = 'abc';
+
 const DefaultArticle = <Article
+    articleId={MOCK_ARTICLE_ID}
     title={MOCK_ARTICLE_TITLE}
     content={MOCK_ARTICLE_CONTENT}
     tags={MOCK_ARTICLE_TAGS}
@@ -43,9 +46,9 @@ describe('Article Component', () => {
             expect(sectionElem).not.toBeInTheDocument();
         });
 
-        it('should render elements correcly by content', async () => {
+        it('should render elements correctly by content', async () => {
             const {queryAllByText} = render(DefaultArticle);
-            // not using data-testid because setDangerouslyIneerHtml removes that attribute
+            // not using data-testid because setDangerouslyInnerHtml removes that attribute
             const sectionParagraphs = await queryAllByText('Lorem Ipsum', {exact: false});
 
             // checking only the text- we could add parsing for the elements, or dynamically add attributes to them
@@ -57,6 +60,7 @@ describe('Article Component', () => {
             const xssFunc = jest.fn();
             global.xssFunc = xssFunc;
             const {} = render(<Article
+                articleId={'abc'}
                 title={MOCK_ARTICLE_TITLE}
                 content={[`<script>xssFunc()</script><p>abc</p>`]}
             />);

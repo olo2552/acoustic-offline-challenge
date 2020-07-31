@@ -1,4 +1,5 @@
 import React from 'react';
+// @ts-ignore
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import {AsyncArticle} from "./AsyncArticle";
 import {
@@ -52,6 +53,28 @@ describe('AsyncArticle Component', () => {
     });
 
     describe('renders Article component if everything is is fine', () => {
+        it("renders article", async () => {
+            const { findByTestId } = render(DefaultAsyncArticle);
+            const spinnerElement = await findByTestId("article");
+            expect(spinnerElement).toBeInTheDocument();
+        });
 
+        it("passes correct content", async () => {
+            const { findAllByText } = render(DefaultAsyncArticle);
+            const paragraphElems = await findAllByText("Lorem Ipsum", {exact: false});
+            expect(paragraphElems).toHaveLength(4);
+        });
+
+        it("passes correct image", async () => {
+            const { findByTestId } = render(DefaultAsyncArticle);
+            const imageElem = await findByTestId("article__main-image");
+            expect(imageElem).toBeInTheDocument();
+        });
+
+        it("passes correct heading", async () => {
+            const { findByTestId } = render(DefaultAsyncArticle);
+            const headerElem = await findByTestId("article__header");
+            expect(headerElem).toContainHTML('Staffordshire Terrier Pups');
+        });
     });
 });
