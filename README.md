@@ -1,3 +1,5 @@
+# To se my thinking process, see tasks.md. There is a lot of info what was and wasn't done and why
+---
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

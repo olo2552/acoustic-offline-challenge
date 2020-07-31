@@ -98,3 +98,5 @@ What I wasn't able to do:
         - I've user semantic HTML overall, but I'm not confident, that this is state-of-the-art solution
     - GIT history
         - Normally I'm doing smaller commits, have better history for `git bisect`, and sometimes I rebase onto base branch to rename commits, squash redundant commits, but here I wasn't so strict about myself- I was writing it more for fun and to test new things actually
+     - Better documentation
+        - Custom readme with hints would be nice
