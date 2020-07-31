@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, {useMemo} from "react";
+import React from "react";
 import {useAsyncValue} from "../async/useAsyncValue/useAsyncValue";
 import {AcousticContentApi} from "../async/acousticContentApi/acousticContentApi";
 import {Article} from "./Article";
@@ -12,7 +12,6 @@ interface IAsyncArticleProps {
 }
 
 export const AsyncArticle: React.FC<IAsyncArticleProps> = (props) => {
-    const articlePromise = useMemo(() => AcousticContentApi.getArticle.bind(null, props.articleId), [props.articleId]);
     const {
         asyncValue: asyncArticle,
         error: articleError,

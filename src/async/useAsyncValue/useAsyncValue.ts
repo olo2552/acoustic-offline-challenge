@@ -28,14 +28,17 @@ export const useAsyncValue = <TPromisedValueProvider extends (...args: any[]) =>
     promisedValueProvider: TPromisedValueProvider,
     promisedValueProviderDependencies: Parameters<TPromisedValueProvider>
 ): AsyncValueSet<UnboxPromise<ReturnType<TPromisedValueProvider>>> => {
-    const articlePromise = useMemo(() => promisedValueProvider.bind(null, ...promisedValueProviderDependencies), promisedValueProviderDependencies);
+    const memoizedPromiseProvider = useMemo(
+        () => promisedValueProvider.bind(null, ...promisedValueProviderDependencies),
+        [promisedValueProvider, promisedValueProviderDependencies]
+    );
     const [asyncValue, setAsyncValue] = useState<TPromisedValueProvider | null>(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
-        promisedValueProvider()
+        memoizedPromiseProvider()
             .then(setAsyncValue)
             .catch(setError)
             .finally(() => {
