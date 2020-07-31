@@ -5,7 +5,7 @@ import {css, jsx} from "@emotion/core";
 
 export const Spinner: React.FC = () => {
     return (
-        <main css={css`
+        <main data-testid={"spinner"} css={css`
             height: 100%;
             width: 100%;
             display: flex;

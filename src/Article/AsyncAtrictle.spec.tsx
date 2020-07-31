@@ -1,9 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import {AsyncArticle} from "./AsyncArticle";
-
-// @ts-ignore
-import translationEN from '../locales/en/translation.json.ts';
 import {
     getArticleNotFoundHandler,
     getArticleServerFailedHandler
@@ -13,6 +10,8 @@ import {server} from "../setupTests";
 
 const NON_EXISTENT_ARTICLE_ID = 'NON_EXISTENT_ARTICLE_ID';
 const CORRECT_ARTICLE_ID = 'fa9519d5-0363-4b8d-8e1f-627d802c08a8';
+
+const DefaultAsyncArticle = <AsyncArticle articleId={CORRECT_ARTICLE_ID} />;
 
 describe('AsyncArticle Component', () => {
     describe('handles errors gently', () => {
@@ -31,14 +30,24 @@ describe('AsyncArticle Component', () => {
         it('should show backend error message for 500 SERVER ERROR', async () => {
             server.use(getArticleServerFailedHandler);
 
-            const { findByText } = render(<AsyncArticle articleId={CORRECT_ARTICLE_ID} />);
+            const { findByText } = render(DefaultAsyncArticle);
             const errorElement = await findByText("SERVER_ERROR_MESSAGE");
+            expect(errorElement).toBeInTheDocument();
         });
     });
 
     describe('handles loading interactively', () => {
-        it('should render Spinner component when promise is pending', () => {
+        it('should render Spinner component when promise is pending', async () => {
+            const { findByTestId } = render(DefaultAsyncArticle);
+            const spinnerElement = await findByTestId("spinner");
+            expect(spinnerElement).toBeInTheDocument();
+        });
 
+        it('should remove spinner after dta is loaded', async () => {
+            const { findByTestId } = render(DefaultAsyncArticle);
+            const spinnerElement = await findByTestId("spinner");
+            expect(spinnerElement).toBeInTheDocument();
+            waitForElementToBeRemoved(() => spinnerElement);
         });
     });
 
