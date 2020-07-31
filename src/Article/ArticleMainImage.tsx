@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import React, {FC} from "react";
-import sanitize from "sanitize-html";
 import {css, jsx} from "@emotion/core";
-import {AcousticContentApi} from "../utils/acousticContentApi/acousticContentApi";
+import {AcousticContentApi} from "../async/acousticContentApi/acousticContentApi";
 
 interface IArticleMainImageProps {
     url: string;

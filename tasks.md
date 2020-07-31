@@ -75,3 +75,6 @@ Intentionally Omitted:
     - State management
     - Checking he type corner-cases in unit tests
         That's why you have typescript- if you use it well, and you trust your type-checking, you gain it for 'free'
+    - Testing internationalization
+        Of course it can be done, but time's limited and we could add it as separate task
+    - Respecting backend error codes

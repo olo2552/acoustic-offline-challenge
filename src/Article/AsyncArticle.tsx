@@ -1,22 +1,23 @@
 /** @jsx jsx */
 import React, {useMemo} from "react";
-import {useAsyncValue} from "../utils/useAsyncValue/useAsyncValue";
-import {AcousticContentApi} from "../utils/acousticContentApi/acousticContentApi";
-import {Spinner} from "../Spinner/Spinner";
+import {useAsyncValue} from "../async/useAsyncValue/useAsyncValue";
+import {AcousticContentApi} from "../async/acousticContentApi/acousticContentApi";
 import {Article} from "./Article";
 import {jsx} from "@emotion/core";
+import {Spinner} from "../components/Spinner";
+import {GenericError} from "../components/GenericError";
 
 interface IAsyncArticleProps {
     articleId: string;
 }
 
 export const AsyncArticle: React.FC<IAsyncArticleProps> = (props) => {
-    const articlePromise = useMemo(() => AcousticContentApi.getArticle(props.articleId), [props.articleId]);
+    const articlePromise = useMemo(() => AcousticContentApi.getArticle.bind(null, props.articleId), [props.articleId]);
     const {
         asyncValue: asyncArticle,
         error: articleError,
         isLoading: isArticleLoading,
-    } = useAsyncValue(articlePromise);
+    } = useAsyncValue(AcousticContentApi.getArticle, [props.articleId]);
 
     if (isArticleLoading) {
         return (
@@ -24,10 +25,14 @@ export const AsyncArticle: React.FC<IAsyncArticleProps> = (props) => {
         );
     }
 
-    if (articleError || !asyncArticle) {
+    if (articleError) {
         return (
-          <p>{"something went wrong"}</p>
+            <GenericError error={articleError?.response?.data?.errors}/>
         );
+    }
+
+    if (!asyncArticle) {
+        return null;
     }
 
     return (

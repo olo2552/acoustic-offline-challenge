@@ -1,6 +1,6 @@
 import {rest} from "msw";
 
-const getArticleUrl = 'https://content-eu-4.content-cms.com/api/859f2008-a40a-4b92-afd0-24bb44d10124/delivery/v1/content/'
+const getArticleUrl = 'https://content-eu-4.content-cms.com/api/859f2008-a40a-4b92-afd0-24bb44d10124/delivery/v1/content/:articleId'
 
 export const getArticleHandler = rest.get(getArticleUrl, (req, res, ctx) => {
     return res(ctx.json({
@@ -147,11 +147,30 @@ export const getArticleHandler = rest.get(getArticleUrl, (req, res, ctx) => {
     }))
 });
 
-const getArticleServerFailedHandler = rest.get('', (req, res, ctx) => {
+export const getArticleServerFailedHandler = rest.get(getArticleUrl, (req, res, ctx) => {
+    console.log("server error called")
+
     return res(
         ctx.status(500),
         ctx.json({
             message: 'Server Error',
+        })
+    );
+});
+
+export const getArticleNotFoundHandler = rest.get(getArticleUrl, (req, res, ctx) => {
+    return res(
+        ctx.status(404),
+        ctx.json({
+            "service": "prod-delivery-content",
+            "requestId": "6e614f65d8d46da6f2d9d0e98eef336d",
+            "errors": {
+                "code": 2003,
+                "message": "Content not found for id : fa9519d5-0363-4b8d-8e1f-627d802c08a81.",
+                "level": "ERROR",
+                "description": "A content item with the specified id was not found in the system.",
+                "locale": "en"
+            }
         })
     );
 });

@@ -12,9 +12,16 @@ export const GenericError: FC<IGenericErrorProps> = (props) => {
 
     return (
         <main>
-            {t("SERVER_ERROR_MESSAGE")}
+            {props.error?.code === 2003 && (
+                t("ENTITY_NOT_FOUND_MESSAGE")
+            )}
+
+            {/* I know this could be handled better, but I don't want to waste time on pinging Marcin via email */}
+            {props.error?.code !== 2003 && (
+                t("ENTITY_NOT_FOUND_MESSAGE")
+            )}
             <code>
-                {JSON.stringify(props.error?.errors?.description)}
+                {JSON.stringify(props?.error?.description)}
             </code>
         </main>
     );

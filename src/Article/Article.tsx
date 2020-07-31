@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from "react";
-import {AcousticContentApi} from "../utils/acousticContentApi/acousticContentApi";
+import {AcousticContentApi} from "../async/acousticContentApi/acousticContentApi";
 import {ArticleContent} from "./ArticleContent";
 import {css, jsx} from "@emotion/core";
 import {LabelWithIcon} from "./LabelWithIcon";
@@ -14,6 +14,7 @@ const getArticleCreationDate = (isoDate: string): string => {
 }
 
 interface IArticleProps {
+    articleId: string;
     mainImage?: {
         url: string;
         altText?: string;

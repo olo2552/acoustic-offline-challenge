@@ -1,4 +1,4 @@
-import {getArticleHandler} from "../utils/acousticContentApi/acousticContentApi.handlers";
+import {getArticleHandler} from "../async/acousticContentApi/acousticContentApi.handlers";
 
 export const handlers = [
     getArticleHandler
