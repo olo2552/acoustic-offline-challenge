@@ -4,12 +4,15 @@ import {AsyncArticle} from "./AsyncArticle";
 
 // @ts-ignore
 import translationEN from '../locales/en/translation.json.ts';
-import {getArticleNotFoundHandler} from "../async/acousticContentApi/acousticContentApi.handlers";
+import {
+    getArticleNotFoundHandler,
+    getArticleServerFailedHandler
+} from "../async/acousticContentApi/acousticContentApi.handlers";
 import {server} from "../setupTests";
 
 
 const NON_EXISTENT_ARTICLE_ID = 'NON_EXISTENT_ARTICLE_ID';
-const CORRECT_ARTICLE_ID = 'NON_EXISTENT_ARTICLE_ID';
+const CORRECT_ARTICLE_ID = 'fa9519d5-0363-4b8d-8e1f-627d802c08a8';
 
 describe('AsyncArticle Component', () => {
     describe('handles errors gently', () => {
@@ -22,12 +25,14 @@ describe('AsyncArticle Component', () => {
         });
 
         it('should show backend error message 401 UNAUTHORIZED', () => {
-            // intentionally ommited, see tasks.md
+            // intentionally omitted, see tasks.md
         });
 
-        it('should show backend error message for 404 SERVER ERROR', () => {
-            const { getByText } = render(<AsyncArticle articleId={CORRECT_ARTICLE_ID} />);
-            const errorElement = getByText(/learn react/i);
+        it('should show backend error message for 500 SERVER ERROR', async () => {
+            server.use(getArticleServerFailedHandler);
+
+            const { findByText } = render(<AsyncArticle articleId={CORRECT_ARTICLE_ID} />);
+            const errorElement = await findByText("SERVER_ERROR_MESSAGE");
         });
     });
 

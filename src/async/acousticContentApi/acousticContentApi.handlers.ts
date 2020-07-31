@@ -151,7 +151,15 @@ export const getArticleServerFailedHandler = rest.get(getArticleUrl, (req, res, 
     return res(
         ctx.status(500),
         ctx.json({
-            message: 'Server Error',
+            "service": "prod-delivery-content",
+            "requestId": "6e614f65d8d46da6f2d9d0e98eef336d",
+            "errors": {
+                "code": 5001,
+                "message": "Server error",
+                "level": "ERROR",
+                "description": "Server error",
+                "locale": "en"
+            }
         })
     );
 });

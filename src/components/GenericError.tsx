@@ -27,7 +27,7 @@ export const GenericError: FC<IGenericErrorProps> = (props) => {
 
                 {/* I know this could be handled better, but I don't want to waste time on pinging Marcin via email */}
                 {props.error?.code !== 2003 && (
-                    t("ENTITY_NOT_FOUND_MESSAGE")
+                    t("SERVER_ERROR_MESSAGE")
                 )}
 
                 <code css={css`
