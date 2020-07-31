@@ -148,8 +148,6 @@ export const getArticleHandler = rest.get(getArticleUrl, (req, res, ctx) => {
 });
 
 export const getArticleServerFailedHandler = rest.get(getArticleUrl, (req, res, ctx) => {
-    console.log("server error called")
-
     return res(
         ctx.status(500),
         ctx.json({

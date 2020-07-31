@@ -4,10 +4,8 @@ import {AsyncArticle} from "./AsyncArticle";
 
 // @ts-ignore
 import translationEN from '../locales/en/translation.json.ts';
-import {setupServer} from "msw/node";
 import {getArticleNotFoundHandler} from "../async/acousticContentApi/acousticContentApi.handlers";
 import {server} from "../setupTests";
-import {AcousticContentApi} from "../async/acousticContentApi/acousticContentApi";
 
 
 const NON_EXISTENT_ARTICLE_ID = 'NON_EXISTENT_ARTICLE_ID';
@@ -20,7 +18,7 @@ describe('AsyncArticle Component', () => {
 
             const { findByText } = render(<AsyncArticle articleId={NON_EXISTENT_ARTICLE_ID} />);
             const errorMessage = await findByText("ENTITY_NOT_FOUND_MESSAGE");
-            const errorElement = findByText(/something/i);
+            expect(errorMessage).toBeInTheDocument()
         });
 
         it('should show backend error message 401 UNAUTHORIZED', () => {
