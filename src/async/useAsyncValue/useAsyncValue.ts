@@ -15,7 +15,7 @@ type AsyncValueLoading<T> = {
 }
 
 type AsyncValueErrored<T> = {
-    isLoading: true;
+    isLoading: false;
     error: any;
     asyncValue: null;
 }
